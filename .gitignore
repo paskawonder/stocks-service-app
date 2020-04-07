@@ -1,0 +1,5 @@
+/.idea
+/stocks-service-app.iml
+/target
+/test.mv.db
+/stocks.mv.db
