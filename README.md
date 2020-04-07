@@ -7,9 +7,9 @@ Prerequisites: Oracle JDK 13.0.2 & Maven
 Tech stack: Oracle JDK 13.0.2, H2 RDBMS
 
 Run: 
-  mvn clean install
-  cd target
-  java -jar stocks-service-app-1.0-SNAPSHOT.jar
+  mvn clean install;
+  cd target;
+  java -jar stocks-service-app-1.0-SNAPSHOT.jar;
 
 port is defined in application.yml and 20071 by default
 
