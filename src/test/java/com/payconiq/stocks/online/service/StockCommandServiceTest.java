@@ -53,6 +53,24 @@ public class StockCommandServiceTest {
     }
 
     @Test
+    public void createTestException() {
+        final StockDTO s = new StockDTO(1L, NAME, PRICE, NOW);
+        final Stock e = Mockito.mock(Stock.class);
+        Mockito.when(stockConverter.convert(s, 0)).thenReturn(e);
+        final EntityTransaction entityTransaction = Mockito.mock(EntityTransaction.class);
+        Mockito.when(stockRepository.getTransaction()).thenReturn(entityTransaction);
+        Mockito.doNothing().when(entityTransaction).begin();
+        Mockito.doThrow(new RuntimeException()).when(stockRepository).persist(e);
+        Mockito.doNothing().when(entityTransaction).rollback();
+        Assertions.assertThrows(RuntimeException.class, () -> stockCommandService.create(s));
+        Mockito.verify(entityTransaction, Mockito.times(1)).begin();
+        Mockito.verify(stockRepository, Mockito.times(1)).persist(e);
+        Mockito.verify(entityTransaction, Mockito.times(1)).rollback();
+        Mockito.verify(entityTransaction, Mockito.times(0)).commit();
+        Mockito.verify(archivalDataService, Mockito.times(0)).produce(e);
+    }
+
+    @Test
     public void updatePriceTest() {
         final long id = 1;
         final StockPriceDTO s = new StockPriceDTO(id, 0, PRICE, NOW);
@@ -69,6 +87,27 @@ public class StockCommandServiceTest {
         Mockito.verify(stockRepository, Mockito.times(1)).update(expected);
         Mockito.verify(entityTransaction, Mockito.times(1)).commit();
         Mockito.verify(archivalDataService, Mockito.times(1)).produce(expected);
+    }
+
+    @Test
+    public void updatePriceException() {
+        final long id = 1;
+        final StockPriceDTO s = new StockPriceDTO(id, 0, PRICE, NOW);
+        final Stock e = Mockito.mock(Stock.class);
+        Mockito.when(e.getName()).thenReturn(NAME);
+        final EntityTransaction entityTransaction = Mockito.mock(EntityTransaction.class);
+        Mockito.when(stockRepository.getTransaction()).thenReturn(entityTransaction);
+        Mockito.doNothing().when(entityTransaction).begin();
+        Mockito.doNothing().when(entityTransaction).rollback();
+        Mockito.when(stockRepository.getById(1)).thenReturn(e);
+        final Stock expected = new Stock(1, 0, NAME, PRICE, NOW);
+        Mockito.doThrow(new RuntimeException()).when(stockRepository).update(expected);
+        Assertions.assertThrows(RuntimeException.class, () -> stockCommandService.updatePrice(s));
+        Mockito.verify(entityTransaction, Mockito.times(1)).begin();
+        Mockito.verify(stockRepository, Mockito.times(1)).update(expected);
+        Mockito.verify(entityTransaction, Mockito.times(1)).rollback();
+        Mockito.verify(entityTransaction, Mockito.times(0)).commit();
+        Mockito.verify(archivalDataService, Mockito.times(0)).produce(expected);
     }
 
     @Test

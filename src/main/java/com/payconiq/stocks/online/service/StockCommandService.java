@@ -29,7 +29,12 @@ public class StockCommandService {
         final Stock e = stockConverter.convert(s, 0);
         final EntityTransaction tx = stockRepository.getTransaction();
         tx.begin();
-        stockRepository.persist(e);
+        try {
+            stockRepository.persist(e);
+        } catch (final Exception ex) {
+            tx.rollback();
+            throw ex;
+        }
         tx.commit();
         archivalDataService.produce(e);
     }
@@ -43,7 +48,12 @@ public class StockCommandService {
         final Stock updated = new Stock(id, s.getVersion(), e.getName(), s.getPrice(), s.getLastUpdate());
         final EntityTransaction tx = stockRepository.getTransaction();
         tx.begin();
-        stockRepository.update(updated);
+        try {
+            stockRepository.update(updated);
+        } catch (final Exception ex) {
+            tx.rollback();
+            throw ex;
+        }
         tx.commit();
         archivalDataService.produce(updated);
     }

@@ -20,9 +20,14 @@ public class ArchivalStockService {
     public void add(final String key, final long stockId, final Map<String, Object> payload) {
         final EntityTransaction tx = archivalStockRepository.getTransaction();
         tx.begin();
-        archivalStockRepository.persist(
-                new ArchivalStockRecord(new ArchivalStockRecord.KeyStockId(key, stockId), new HashMap<>(payload))
-        );
+        try {
+            archivalStockRepository.persist(
+                    new ArchivalStockRecord(new ArchivalStockRecord.KeyStockId(key, stockId), new HashMap<>(payload))
+            );
+        } catch (final Exception ex) {
+            tx.rollback();
+            throw ex;
+        }
         tx.commit();
     }
 

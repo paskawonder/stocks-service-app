@@ -23,7 +23,7 @@ public class ArchivalDataServiceTest {
     public ArchivalDataServiceTest() {
         kafkaTemplate = Mockito.mock(KafkaTemplate.class);
         objectMapper = new ObjectMapper();
-        this.archivalDataService = new ArchivalDataService(TOPIC, kafkaTemplate, objectMapper);
+        archivalDataService = new ArchivalDataService(TOPIC, kafkaTemplate, objectMapper);
     }
 
     @SuppressWarnings("unchecked")

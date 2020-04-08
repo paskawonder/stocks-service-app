@@ -40,6 +40,20 @@ public class ArchivalStockServiceTest {
     }
 
     @Test
+    public void addTest_exception() {
+        final ArchivalStockRecord e = new ArchivalStockRecord(new ArchivalStockRecord.KeyStockId(KEY, 1), new HashMap<>());
+        final EntityTransaction entityTransaction = Mockito.mock(EntityTransaction.class);
+        Mockito.when(archivalStockRepository.getTransaction()).thenReturn(entityTransaction);
+        Mockito.doNothing().when(entityTransaction).begin();
+        Mockito.doNothing().when(entityTransaction).commit();
+        Mockito.doThrow(new RuntimeException()).when(archivalStockRepository).persist(e);
+        Assertions.assertThrows(RuntimeException.class, () -> archivalStockService.add(KEY, 1, Collections.emptyMap()));
+        Mockito.verify(entityTransaction, Mockito.times(1)).begin();
+        Mockito.verify(archivalStockRepository, Mockito.times(1)).persist(e);
+        Mockito.verify(entityTransaction, Mockito.times(1)).rollback();
+    }
+
+    @Test
     public void getAllByStockIdTest() {
         final Map<String, Object> expected = Collections.emptyMap();
         final ArchivalStockRecord e = new ArchivalStockRecord(new ArchivalStockRecord.KeyStockId(KEY, 1), new HashMap<>());
