@@ -15,3 +15,7 @@ port is defined in application.yml and 20071 by default
 
 At startup, the database is migrated with the help of Flyway and scripts located under src/main/resources/db/migration/ 
 Flyway can be disabled by setting spring.flyway.enabled property in application.yml to false
+
+API:
+
+https://app.swaggerhub.com/apis/paskawonder1/stocks-service-app/1.0-SNAPSHOT
