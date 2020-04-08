@@ -8,24 +8,3 @@ VALUES (1, 1, 'STOCK 1', 1.202, PARSEDATETIME('2020-01-01 00:00:00.000', 'yyyy-M
 INSERT INTO STOCK (ID, VERSION, NAME, CURRENT_PRICE, LAST_UPDATE)
 VALUES (2, 0, 'STOCK 2', 1, PARSEDATETIME('2020-01-01 00:00:00.000', 'yyyy-MM-dd HH:mm:ss.SSS'));
 ------------------------------------
-
-----POPULATE_ARCHIVAL_STOCK_DATA----
-INSERT INTO ARCHIVAL_STOCK_DATA (RECORD_KEY, STOCK_ID, PAYLOAD)
-VALUES ('c1c594e9-2a5f-40ec-9496-54146e4f9261', 0, '{"id":0,"version":0,"name":"name","currentPrice":0,"lastUpdate":"2018-01-01T00:00:00.000000Z"}');
-
-INSERT INTO ARCHIVAL_STOCK_DATA (RECORD_KEY, STOCK_ID, PAYLOAD)
-VALUES ('32341e67-7208-462c-937b-82ee958a49c3', 1, '{"id":1,"version":0,"name":"name","currentPrice":0,"lastUpdate":"2019-01-01T00:00:00.000000Z"}');
-
-INSERT INTO ARCHIVAL_STOCK_DATA (RECORD_KEY, STOCK_ID, PAYLOAD)
-VALUES ('37e1d3e1-7824-441d-9580-49a582deeceb', 2, '{"id":2,"version":0,"name":"name","currentPrice":0,"lastUpdate":"2020-01-01T00:00:00.000000Z"}');
-
-INSERT INTO ARCHIVAL_STOCK_DATA (RECORD_KEY, STOCK_ID, PAYLOAD)
-VALUES ('5a047e75-08e2-4706-a61e-3bcab3092339', 0, '{"id":0,"version":1,"name":"name","currentPrice":0,"lastUpdate":"2019-01-01T00:00:00.000000Z"}');
-
-INSERT INTO ARCHIVAL_STOCK_DATA (RECORD_KEY, STOCK_ID, PAYLOAD)
-VALUES ('cbd6d09a-5f9c-4f47-ae1c-cfd0000130bc', 1, '{"id":1,"version":1,"name":"name","currentPrice":0,"lastUpdate":"2020-01-01T00:00:00.000000Z"}');
-
-INSERT INTO ARCHIVAL_STOCK_DATA (RECORD_KEY, STOCK_ID, PAYLOAD)
-VALUES ('6e90ad98-ada8-4f98-9c2a-871992726d66', 0, '{"id":0,"version":2,"name":"name","currentPrice":0,"lastUpdate":"2020-01-01T00:00:00.000000Z"}');
-------------------------------------
-

@@ -3,6 +3,7 @@ package com.payconiq.stocks.online.repository;
 import com.payconiq.stocks.online.model.entity.Stock;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -32,6 +33,10 @@ public class StockRepository {
 
     public Stock getById(final long id) {
         return entityManager.find(Stock.class, id);
+    }
+
+    public EntityTransaction getTransaction() {
+        return entityManager.getTransaction();
     }
 
 }

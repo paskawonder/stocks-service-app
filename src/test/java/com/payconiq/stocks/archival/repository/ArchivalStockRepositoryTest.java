@@ -2,6 +2,7 @@ package com.payconiq.stocks.archival.repository;
 
 import com.payconiq.stocks.archival.model.entity.ArchivalStockRecord;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,8 +16,6 @@ public class ArchivalStockRepositoryTest {
     private static final String DELETE_FROM_ARCHIVAL_STOCK = "delete from ArchivalStockRecord";
 
     private static final String KEY = "key";
-
-    private static final String PAYLOAD = "PAYLOAD";
 
     private final EntityManager entityManager;
 
@@ -38,7 +37,7 @@ public class ArchivalStockRepositoryTest {
 
     @Test
     public void persistTest() {
-        final ArchivalStockRecord expected = new ArchivalStockRecord(new ArchivalStockRecord.KeyStockId(KEY, 1), PAYLOAD);
+        final ArchivalStockRecord expected = new ArchivalStockRecord(new ArchivalStockRecord.KeyStockId(KEY, 1), new HashMap<>());
         entityManager.getTransaction().begin();
         archivalStockRepository.persist(expected);
         entityManager.getTransaction().commit();
@@ -48,10 +47,10 @@ public class ArchivalStockRepositoryTest {
     @Test
     public void getAllByStockIdTest() {
         final List<ArchivalStockRecord> expected = List.of(
-                new ArchivalStockRecord(new ArchivalStockRecord.KeyStockId(KEY + 1, 1), PAYLOAD),
-                new ArchivalStockRecord(new ArchivalStockRecord.KeyStockId(KEY + 2, 1), PAYLOAD),
-                new ArchivalStockRecord(new ArchivalStockRecord.KeyStockId(KEY + 3, 1), PAYLOAD),
-                new ArchivalStockRecord(new ArchivalStockRecord.KeyStockId(KEY + 1, 2), PAYLOAD)
+                new ArchivalStockRecord(new ArchivalStockRecord.KeyStockId(KEY + 1, 1), new HashMap<>()),
+                new ArchivalStockRecord(new ArchivalStockRecord.KeyStockId(KEY + 2, 1), new HashMap<>()),
+                new ArchivalStockRecord(new ArchivalStockRecord.KeyStockId(KEY + 3, 1), new HashMap<>()),
+                new ArchivalStockRecord(new ArchivalStockRecord.KeyStockId(KEY + 1, 2), new HashMap<>())
         );
         entityManager.getTransaction().begin();
         expected.forEach(entityManager::persist);
@@ -65,6 +64,11 @@ public class ArchivalStockRepositoryTest {
     @Test
     public void getAllByStockIdTest_empty() {
         Assertions.assertEquals(Collections.emptyList(), archivalStockRepository.getAllByStockId(1, 1, 10));
+    }
+
+    @Test
+    public void getTransactionTest() {
+        Assertions.assertEquals(entityManager.getTransaction(), archivalStockRepository.getTransaction());
     }
 
 }

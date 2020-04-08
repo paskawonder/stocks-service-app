@@ -1,6 +1,7 @@
 package com.payconiq.stocks.archival.model.entity;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
@@ -31,7 +32,7 @@ public class ArchivalStockRecord {
 
     @Column(name = "PAYLOAD")
     @Lob
-    private String payload;
+    private HashMap<String, Object> payload;
 
     @Embeddable
     @NoArgsConstructor

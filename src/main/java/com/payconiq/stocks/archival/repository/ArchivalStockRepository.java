@@ -3,6 +3,7 @@ package com.payconiq.stocks.archival.repository;
 import com.payconiq.stocks.archival.model.entity.ArchivalStockRecord;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -19,7 +20,7 @@ public class ArchivalStockRepository {
     }
 
     public void persist(final ArchivalStockRecord e) {
-        entityManager.persist(e);
+        entityManager.merge(e);
     }
 
     public List<ArchivalStockRecord> getAllByStockId(final long stockId, final int start, final int limit) {
@@ -27,6 +28,10 @@ public class ArchivalStockRepository {
                 .setParameter(STOCK_ID, stockId)
                 .setFirstResult(start).setMaxResults(limit)
                 .getResultList();
+    }
+
+    public EntityTransaction getTransaction() {
+        return entityManager.getTransaction();
     }
 
 }

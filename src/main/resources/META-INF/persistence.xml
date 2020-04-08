@@ -7,15 +7,6 @@
         <class>com.payconiq.stocks.archival.model.entity.ArchivalStockRecord</class>
         <class>com.payconiq.stocks.online.model.entity.Stock</class>
 
-        <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:./test" />
-            <property name="javax.persistence.jdbc.user" value="sa" />
-            <property name="javax.persistence.jdbc.password" value="" />
-            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
-            <property name="hibernate.hbm2ddl.auto" value="create-drop" />
-            <property name = "hibernate.show_sql" value = "true" />
-        </properties>
-
     </persistence-unit>
 
 </persistence>

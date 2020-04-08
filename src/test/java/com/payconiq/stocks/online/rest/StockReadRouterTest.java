@@ -103,6 +103,9 @@ public class StockReadRouterTest {
 
     @Test
     public void readRouteTest_byId400() {
+        webTestClient.get().uri(API_STOCKS_ + "-1")
+                .exchange()
+                .expectStatus().isBadRequest();
         webTestClient.get().uri(API_STOCKS_ + ID)
                 .exchange()
                 .expectStatus().isBadRequest();

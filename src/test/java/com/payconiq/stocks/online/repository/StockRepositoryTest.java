@@ -10,7 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.Persistence;
-import javax.persistence.RollbackException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,18 +53,14 @@ public class StockRepositoryTest {
 
     @Test
     public void persistTest_exception() {
-        final EntityManagerFactory entityManagerFactory = Persistence
-                .createEntityManagerFactory("persistence");
-        final EntityManager concurrentEntityManager = entityManagerFactory.createEntityManager();
+        final Stock expected = new Stock(1, 0, NAME, PRICE, NOW);
         entityManager.getTransaction().begin();
-        stockRepository.persist(new Stock(1, 0, NAME, PRICE, NOW));
+        stockRepository.persist(expected);
         entityManager.getTransaction().commit();
-        concurrentEntityManager.getTransaction().begin();
-        new StockRepository(concurrentEntityManager).persist(new Stock(1, 0, NAME, PRICE, NOW));
-        Assertions.assertThrows(RollbackException.class, () -> concurrentEntityManager.getTransaction().commit());
+        Assertions.assertEquals(expected, entityManager.find(Stock.class, 1L));
         entityManager.getTransaction().begin();
-        Assertions.assertThrows(EntityExistsException.class,
-                () -> stockRepository.persist(new Stock(1, 0, NAME, PRICE, NOW)));
+        Assertions.assertThrows(EntityExistsException.class, () -> stockRepository.persist(new Stock(1, 0, NAME, PRICE, NOW)));
+        entityManager.getTransaction().rollback();
     }
 
     @Test
@@ -125,6 +120,11 @@ public class StockRepositoryTest {
     @Test
     public void getByIdTest_null() {
         Assertions.assertNull(stockRepository.getById(1));
+    }
+
+    @Test
+    public void getTransactionTest() {
+        Assertions.assertEquals(entityManager.getTransaction(), stockRepository.getTransaction());
     }
 
 }

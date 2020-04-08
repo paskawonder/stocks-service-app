@@ -51,8 +51,10 @@ public class StockReadRouter {
                     } catch (final NumberFormatException e) {
                         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
                     }
-                    return ServerResponse.ok().contentType(MediaType.APPLICATION_STREAM_JSON)
-                            .body(stockReadService.getById(id), StockDTO.class);
+                    if (id < 0) {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+                    }
+                    return ServerResponse.ok().contentType(MediaType.APPLICATION_STREAM_JSON).body(stockReadService.getById(id), StockDTO.class);
                 })
         );
     }

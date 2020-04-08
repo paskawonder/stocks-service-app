@@ -1,10 +1,9 @@
 package com.payconiq.stocks.online.service;
 
-import com.payconiq.stocks.online.model.converter.StockConverter;
 import com.payconiq.stocks.online.model.StockDTO;
+import com.payconiq.stocks.online.model.converter.StockConverter;
 import com.payconiq.stocks.online.model.entity.Stock;
 import com.payconiq.stocks.online.repository.StockRepository;
-import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -21,12 +20,10 @@ public class StockReadService {
         this.stockConverter = stockConverter;
     }
 
-    @Transactional
     public Flux<StockDTO> getAll(final int start, final int limit) {
         return Flux.fromStream(stockRepository.getAll(start, limit).stream().map(stockConverter::convert));
     }
 
-    @Transactional
     public Mono<StockDTO> getById(final long id) {
         final Stock e = stockRepository.getById(id);
         final Mono<StockDTO> result;

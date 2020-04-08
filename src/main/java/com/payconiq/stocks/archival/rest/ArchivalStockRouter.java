@@ -41,7 +41,7 @@ public class ArchivalStockRouter {
             } catch (final NumberFormatException e) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
             }
-            if (start < 0 || limit < 1) {
+            if (id < 0 || start < 0 || limit < 1) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
             }
             return ServerResponse.ok().contentType(MediaType.APPLICATION_STREAM_JSON)
