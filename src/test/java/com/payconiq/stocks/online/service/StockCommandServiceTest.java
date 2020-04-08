@@ -67,7 +67,7 @@ public class StockCommandServiceTest {
         Mockito.verify(stockRepository, Mockito.times(1)).persist(e);
         Mockito.verify(entityTransaction, Mockito.times(1)).rollback();
         Mockito.verify(entityTransaction, Mockito.times(0)).commit();
-        Mockito.verify(archivalDataService, Mockito.times(0)).produce(e);
+        Mockito.verify(archivalDataService, Mockito.times(0)).produce(Mockito.any());
     }
 
     @Test
@@ -86,7 +86,7 @@ public class StockCommandServiceTest {
         Mockito.verify(entityTransaction, Mockito.times(1)).begin();
         Mockito.verify(stockRepository, Mockito.times(1)).update(expected);
         Mockito.verify(entityTransaction, Mockito.times(1)).commit();
-        Mockito.verify(archivalDataService, Mockito.times(1)).produce(expected);
+        Mockito.verify(archivalDataService, Mockito.times(1)).produce(new Stock(1, 1, NAME, PRICE, NOW));
     }
 
     @Test
@@ -107,7 +107,7 @@ public class StockCommandServiceTest {
         Mockito.verify(stockRepository, Mockito.times(1)).update(expected);
         Mockito.verify(entityTransaction, Mockito.times(1)).rollback();
         Mockito.verify(entityTransaction, Mockito.times(0)).commit();
-        Mockito.verify(archivalDataService, Mockito.times(0)).produce(expected);
+        Mockito.verify(archivalDataService, Mockito.times(0)).produce(Mockito.any());
     }
 
     @Test

@@ -40,7 +40,7 @@ public class DevConfiguration {
             for (int i = 0; i < stockList.size(); i++) {
                 final Stock s = stockList.get(i);
                 for (int j = i; j >= 0; j--) {
-                    final Stock e = new Stock(s.getId(), s.getVersion(), s.getName(), s.getCurrentPrice(), s.getLastUpdate().minusYears(j));
+                    final Stock e = new Stock(s.getId(), i - j, s.getName(), s.getCurrentPrice(), s.getLastUpdate().minusYears(j));
                     entityManager.persist(
                             new ArchivalStockRecord(new ArchivalStockRecord.KeyStockId(UUID.randomUUID().toString(), s.getId()), objectMapper.convertValue(e, HASH_MAP_TYPE_REFERENCE))
                     );

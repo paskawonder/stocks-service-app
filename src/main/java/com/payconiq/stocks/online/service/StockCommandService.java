@@ -55,7 +55,7 @@ public class StockCommandService {
             throw ex;
         }
         tx.commit();
-        archivalDataService.produce(updated);
+        archivalDataService.produce(new Stock(id, s.getVersion() + 1, e.getName(), s.getPrice(), s.getLastUpdate()));
     }
 
 }
