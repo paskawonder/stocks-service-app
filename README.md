@@ -17,5 +17,4 @@ At startup, the database is migrated with the help of Flyway and scripts located
 Flyway can be disabled by setting spring.flyway.enabled property in application.yml to false
 
 API:
-
 https://app.swaggerhub.com/apis/paskawonder1/stocks-service-app/1.0-SNAPSHOT
