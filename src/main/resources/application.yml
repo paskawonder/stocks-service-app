@@ -1,0 +1,22 @@
+server:
+  port: 20071
+
+spring:
+  application:
+    name: com.payconiq.stocks
+  profiles:
+    active: dev
+
+jpa:
+  datasource:
+    url: jdbc:h2:./stocks
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  ddl-auto: none
+
+kafka:
+  bootstrap-servers: 127.0.0.1:20079
+  port: 20079
+  retries: 5
+  topic: stock-archival-data
