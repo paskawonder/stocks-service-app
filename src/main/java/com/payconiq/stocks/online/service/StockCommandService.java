@@ -6,10 +6,13 @@ import com.payconiq.stocks.online.model.converter.StockConverter;
 import com.payconiq.stocks.online.model.entity.Stock;
 import com.payconiq.stocks.online.repository.ArchivalDataService;
 import com.payconiq.stocks.online.repository.StockRepository;
+
+import javax.annotation.concurrent.Immutable;
 import javax.persistence.EntityTransaction;
 import org.springframework.stereotype.Service;
 
 @Service
+@Immutable
 public class StockCommandService {
 
     private final StockRepository stockRepository;
@@ -17,6 +20,8 @@ public class StockCommandService {
     private final StockConverter stockConverter;
 
     private final ArchivalDataService archivalDataService;
+
+    private int i;
 
     public StockCommandService(final StockRepository stockRepository, final StockConverter stockConverter,
                                final ArchivalDataService archivalDataService) {
@@ -26,6 +31,7 @@ public class StockCommandService {
     }
 
     public void create(final StockDTO s) {
+        i++;
         final Stock e = stockConverter.convert(s, 0);
         final EntityTransaction tx = stockRepository.getTransaction();
         tx.begin();
